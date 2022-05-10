@@ -77,13 +77,23 @@ class TK_Es8388 : public AudioAdapter {
 
 public:
   TK_Es8388(Adafruit_I2CDevice *i2cdevice);
+  virtual bool init() override;
+  virtual bool setVolume(int8_t volume) override;
+  virtual int8_t getVolume() override {return 0;}
+  virtual bool setBitsPerSample(int bits) override;
+  virtual bool setChannels(int chan) override;
+  virtual bool start(audio_hal_codec_mode_t mode) override;
+  virtual bool stop(audio_hal_codec_mode_t mode) override;
 
 protected:
-  bool initDev();
-  bool writeVolume2Dev(int8_t volume);
+  bool es8388_set_voice_volume(int volume);
+  bool es8388_start(es_module_t mode);
+  bool es8388_stop(es_module_t mode);
+  bool es8388_set_voice_mute(bool enable);
 
 private:
   bool es_write_reg(uint8_t reg_add, uint8_t data);
+  bool es_read_reg(uint8_t reg_add, uint8_t *p_data);
   bool es8388_set_adc_dac_volume(int mode, int volume, int dot);
 };
 #endif // Es8388_h
