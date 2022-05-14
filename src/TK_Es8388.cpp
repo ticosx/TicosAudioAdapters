@@ -194,7 +194,6 @@ bool TK_Es8388::es8388_set_voice_mute(bool enable)
 bool TK_Es8388::es8388_set_voice_volume(int volume)
 {
     bool res = true;
-    ESP_LOGE(ES_TAG, "es8388_set_voice_volume");
     if (volume < 0)
         volume = 0;
     else if (volume > 100)
