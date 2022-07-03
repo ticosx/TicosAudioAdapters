@@ -1,4 +1,5 @@
 #include <TK_Es8388.h>
+#include "Log.h"
 
 TK_Es8388::TK_Es8388(Adafruit_I2CDevice *i2cdevice) : AudioAdapter(i2cdevice) {
 
@@ -100,9 +101,9 @@ bool TK_Es8388::init() {
 bool TK_Es8388::es8388_set_adc_dac_volume(int mode, int volume, int dot)
 {
     bool res = true;
-    ESP_LOGW(ES_TAG, "es8388_set_adc_dac_volume\n");
+    logWarn("es8388_set_adc_dac_volume\n");
     if ( volume < -96 || volume > 0 ) {
-        ESP_LOGW(ES_TAG, "Warning: volume < -96! or > 0!\n");
+        logWarn("Warning: volume < -96! or > 0!\n");
         if (volume < -96)
             volume = -96;
         else
@@ -223,7 +224,7 @@ bool TK_Es8388::setBitsPerSample(int bits_length) {
   } else if(bits_length == 16) {
     bits = BIT_LENGTH_16BITS;
   } else {
-    ESP_LOGE(ES_TAG, "The bit length %d is not supported by codec", bits_length);
+    logErr("The bit length %d is not supported by codec", bits_length);
   }
 
   //TODO: Now we only support ADC & DAC in same format, if want to support different format, do it later or use soft resampler
